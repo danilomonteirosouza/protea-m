@@ -128,7 +128,7 @@ Tanto o bloco preditivo quanto o generativo partem de um CSV do **Modelo 1** com
 - `FormaPreferida`
 - `DescricaoComportamento`
 
-No generativo, caso alguma coluna esteja ausente, ela é criada vazia para evitar falha na execução. fileciteturn2file0L73-L143
+No generativo, caso alguma coluna esteja ausente, ela é criada vazia para evitar falha na execução.
 
 ---
 ## Execução do Pipeline
