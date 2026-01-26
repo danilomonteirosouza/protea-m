@@ -184,9 +184,9 @@ python modulo_generativo.py --matriz_csv dados/matriz_caa_ajustada.csv --gen_mod
 
 ### Saídas do Bloco Generativo
 
-- `workspace_social_story/pessoa_<PessoaID>/textos/`: roteiro e textos estruturados da História Social. fileciteturn2file0L152-L161  
-- `workspace_social_story/pessoa_<PessoaID>/imagens/`: imagens geradas (ou placeholders em modo offline). fileciteturn2file0L152-L161  
-- `workspace_social_story/resultados/logs/`: logs auxiliares; quando o modo offline/fallback é acionado, o motivo pode ser registrado em `social_story_offline_reason.txt`. fileciteturn2file0L221-L229  
+- `workspace_social_story/pessoa_<PessoaID>/textos/`: roteiro e textos estruturados da História Social. 
+- `workspace_social_story/pessoa_<PessoaID>/imagens/`: imagens geradas (ou placeholders em modo offline).  
+- `workspace_social_story/resultados/logs/`: logs auxiliares; quando o modo offline/fallback é acionado, o motivo pode ser registrado em `social_story_offline_reason.txt`.  
 
 
 ---
