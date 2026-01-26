@@ -23,7 +23,6 @@ O framework integra:
 - [Saídas Geradas](#saídas-geradas)
 - [Reprodutibilidade](#reprodutibilidade)
 - [Aspectos Éticos e Privacidade](#aspectos-éticos-e-privacidade)
-- [Troubleshooting](#troubleshooting)
 - [Como Citar](#como-citar)
 - [Licença](#licença)
 
@@ -53,7 +52,6 @@ Responsável por:
 
 ---
 
-
 ## Estrutura do Repositório (esperada para execução sem falhas)
 
 > **Importante:** os scripts atuais utilizam caminhos relativos por padrão. Para evitar erros de “pasta/arquivo não encontrado”, mantenha a estrutura abaixo **ou** passe caminhos explícitos via CLI.
@@ -62,27 +60,18 @@ Responsável por:
 .
 ├── README.md
 ├── requirements.txt
-├── api_key.env                 # opcional (ou .env). Pode conter OPENAI_API_KEY e OPENAI_* (ver seção Bloco Generativo)
-├── modulo_preditivo.py         # módulo preditivo (treino/avaliação + geração de embeddings SBERT)
-├── modulo_generativo.py        # módulo generativo (História Social + HQ)
+├── api_key.env
+├── modulo_preditivo.py
+├── modulo_generativo.py
 ├── dados/
-│   ├── matriz_caa_ajustada.csv       # ENTRADA (Modelo 1 / base original, sem embeddings)  ← default do preditivo
-│   ├── base_embeddings_sbert.csv     # GERADO automaticamente (se não existir) pelo preditivo
-│   └── resultado_v98_combo_blend/    # SAÍDA do preditivo (criado na mesma pasta do CSV SBERT)
-│       ├── fold_1/
-│       ├── fold_2/
-│       ├── ...
-│       └── relatorios_gerais/
+│   ├── matriz_caa_ajustada.csv
+│   ├── base_embeddings_sbert.csv
+│   └── resultado_v98_combo_blend/
 ├── examples/
-│   └── matriz_caa_ajustada.csv       # opcional: ENTRADA default do generativo (pode ser cópia/symlink do arquivo em dados/)
-└── workspace_social_story/      # SAÍDA do generativo (default)
-    ├── pessoa_<PessoaID>/
-    │   ├── textos/
-    │   └── imagens/
-    └── resultados/
-        └── logs/
-            └── social_story_offline_reason.txt   # aparece quando o modo offline/fallback é acionado
+│   └── matriz_caa_ajustada.csv
+└── workspace_social_story/
 ```
+
 ---
 
 ## Pré-requisitos
@@ -109,108 +98,23 @@ pip install -r requirements.txt
 
 ---
 
-
-
 ## Dados de Entrada
 
 ### Arquivo do Modelo 1 (`matriz_caa_ajustada.csv`)
 
-Tanto o bloco preditivo quanto o generativo partem de um CSV do **Modelo 1** com, no mínimo, as colunas:
+A matriz CAA utilizada como entrada do pipeline corresponde à base **MARSOCH (Modelo 1)**, disponibilizada publicamente no seguinte repositório:
 
-- `PessoaID`
-- `PlanoIntervencao`
-- `PlanoGuia`
-- `NivelComunicacao`
-- `FuncaoComunicativa`
-- `Ambiente`
-- `ParceiroComunicacional`
-- `SuporteNecessario`
-- `FormaPreferida`
-- `DescricaoComportamento`
+https://github.com/danilomonteirosouza/marsoch
 
-No generativo, caso alguma coluna esteja ausente, ela é criada vazia para evitar falha na execução.
+A matriz de embeddings SBERT (`base_embeddings_sbert.csv`) **não é fornecida previamente** e é **gerada automaticamente após a execução do bloco preditivo**.
 
 ---
+
 ## Execução do Pipeline
-
-### 1) Bloco Preditivo (avaliação + geração de embeddings)
-
-Executa o pipeline com os padrões (lê `dados/matriz_caa_ajustada.csv`; cria `dados/base_embeddings_sbert.csv` se necessário; salva resultados em `dados/resultado_v98_combo_blend/`):
 
 ```bash
 python modulo_preditivo.py
-```
-
-Exemplo com caminhos explícitos (recomendado se seu CSV estiver em outra pasta):
-
-```bash
-python modulo_preditivo.py \
-  --csv_original dados/matriz_caa_ajustada.csv \
-  --csv_sbert dados/base_embeddings_sbert.csv
-```
-
-O script procura os arquivos por candidatos comuns (ex.: raiz do projeto, `dados/`, e algumas variações relativas) antes de falhar.
-
-### 2) Bloco Generativo (História Social + HQ)
-
-Executa usando o CSV do Modelo 1 e grava em `workspace_social_story/`:
-
-```bash
-python modulo_generativo.py --matriz_csv dados/matriz_caa_ajustada.csv
-```
-
-Se você mantiver a cópia em `examples/` (padrão do script), o comando mínimo é:
-
-```bash
 python modulo_generativo.py
-```
-
-Para forçar modo offline (sem chamadas online):
-
-```bash
-python modulo_generativo.py --matriz_csv dados/matriz_caa_ajustada.csv --gen_mode offline
-```
-
-
----
-
-
-## Saídas Geradas
-
-### Saídas do Bloco Preditivo
-
-- `dados/base_embeddings_sbert.csv`: base pré-computada com embeddings SBERT + colunas `*_freq` (gerada automaticamente quando ausente). 
-- `dados/resultado_v98_combo_blend/`: diretório de resultados com subpastas por *fold*, gráficos (`.png`) e relatórios (`.csv/.json`). (A pasta é criada no mesmo diretório onde o CSV SBERT é resolvido.)
-
-### Saídas do Bloco Generativo
-
-- `workspace_social_story/pessoa_<PessoaID>/textos/`: roteiro e textos estruturados da História Social. 
-- `workspace_social_story/pessoa_<PessoaID>/imagens/`: imagens geradas (ou placeholders em modo offline).  
-- `workspace_social_story/resultados/logs/`: logs auxiliares; quando o modo offline/fallback é acionado, o motivo pode ser registrado em `social_story_offline_reason.txt`.  
-
-
----
-
-## Reprodutibilidade
-
-- Seed fixa
-- Configurações versionadas
-- Logs de execução
-
----
-
-## Aspectos Éticos e Privacidade
-
-- Dados anonimizados
-- Uso acadêmico
-- Conformidade ética
-
----
-
-## Como Citar
-
-```
-Souza, D. (2026). PROTEA-M: Framework preditivo-generativo multimodal para apoio à comunicação em situações de crise. Código-fonte da tese de doutorado.
 ```
 
 ---
