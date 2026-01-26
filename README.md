@@ -1,7 +1,7 @@
-# PROTEA-M — Código-fonte da Tese  
+# PROTEA-M  
 Framework Preditivo-Generativo Multimodal para Comunicação em Situações de Crise
 
-Este repositório contém o **código-fonte oficial da tese de doutorado** que propõe o **PROTEA-M**, um *framework* **preditivo-generativo multimodal** voltado ao eixo de **disseminação e comunicação** em Sistemas de Alerta Precoce (*Early Warning Systems – EWS*), com foco em **pessoas com Complexas Necessidades de Comunicação**, como indivíduos com **Transtorno do Espectro Autista (TEA)**.
+Este repositório contém o **código-fonte oficial** que propõe o **PROTEA-M**, um *framework* **preditivo-generativo multimodal** voltado ao eixo de **disseminação e comunicação** em Sistemas de Alerta Precoce (*Early Warning Systems – EWS*), com foco em **pessoas com Complexas Necessidades de Comunicação**, como indivíduos com **Transtorno do Espectro Autista (TEA)**.
 
 O framework integra:
 - **Modelagem preditiva**, para inferir o **perfil comunicativo individual** com base na Matriz de Comunicação;
