@@ -149,7 +149,7 @@ python modulo_preditivo.py \
   --csv_sbert dados/base_embeddings_sbert.csv
 ```
 
-O script procura os arquivos por candidatos comuns (ex.: raiz do projeto, `dados/`, e algumas variações relativas) antes de falhar. fileciteturn2file2L100-L118
+O script procura os arquivos por candidatos comuns (ex.: raiz do projeto, `dados/`, e algumas variações relativas) antes de falhar.
 
 ### 2) Bloco Generativo (História Social + HQ)
 
@@ -179,7 +179,7 @@ python modulo_generativo.py --matriz_csv dados/matriz_caa_ajustada.csv --gen_mod
 
 ### Saídas do Bloco Preditivo
 
-- `dados/base_embeddings_sbert.csv`: base pré-computada com embeddings SBERT + colunas `*_freq` (gerada automaticamente quando ausente). fileciteturn3file9L64-L83  
+- `dados/base_embeddings_sbert.csv`: base pré-computada com embeddings SBERT + colunas `*_freq` (gerada automaticamente quando ausente). 
 - `dados/resultado_v98_combo_blend/`: diretório de resultados com subpastas por *fold*, gráficos (`.png`) e relatórios (`.csv/.json`). (A pasta é criada no mesmo diretório onde o CSV SBERT é resolvido.)
 
 ### Saídas do Bloco Generativo
