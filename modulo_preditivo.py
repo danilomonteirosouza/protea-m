@@ -2420,11 +2420,24 @@ def run_pipeline(args):
 
     # Boxplot de acurácia por método (Test)
     plt.figure()
-    plt.boxplot([df_methods[k] for k in methods_keys])
-    plt.xticks(np.arange(1, len(labels_methods) + 1), labels_methods)
-    plt.title("Boxplot — Acurácia por método (Test)");
+
+    data = [df_methods[k].astype(float).values for k in methods_keys]
+    means = [float(np.mean(d)) for d in data]
+
+    bp = plt.boxplot(
+        data,
+        labels=labels_methods,  # se seu matplotlib for antigo, troque por plt.xticks depois
+        showfliers=True
+    )
+
+    # Troca a linha central (mediana) pela média
+    for i, med_line in enumerate(bp["medians"]):
+        m = means[i]
+        med_line.set_ydata([m, m])  # desenha a "mediana" na altura da média
+
+    plt.title("Boxplot — Acurácia por método (Test) — Linha central Média")
     plt.tight_layout()
-    plt.savefig(os.path.join(methods_dir, "boxplot_acc_by_method.png"), bbox_inches="tight");
+    plt.savefig(os.path.join(methods_dir, "boxplot_acc_by_method.png"), bbox_inches="tight")
     plt.close()
 
     # -------- NOVO: boxplots de TEMPOS por método --------
